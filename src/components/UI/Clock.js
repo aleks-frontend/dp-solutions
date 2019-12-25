@@ -66,37 +66,39 @@ const ClockHand = styled.div`
     background: ${props => props.secondsHand ? 'red' : 'url(img/clock-hand.png)'};
     background-size: 100% 100%;
     transform-origin: 100%;
-    transform: ${props => `rotate(${props.degree}deg)`};
 `;
 
 const Clock = (props) => {
     const [state, setState] = React.useState({
-        secondDegrees: undefined,
-        minuteDegrees: undefined,
-        hourDegrees: undefined,
         ready: false
     });
+
+    const secondHandRef = React.useRef();
+    const minuteHandRef = React.useRef();
+    const hourHandRef = React.useRef();
 
     const setTime = () => {
         const now = new Date();
         const seconds = now.getSeconds();
         const minutes = now.getMinutes();
         let hours = now.getHours() + Number(props.timeDifference);
-        
+
         const secondDegrees = ((seconds / 60) * 360) + 90;
         const minuteDegrees = ((minutes / 60) * 360) + 90;
-        
+
         if (hours > 24) hours = hours - 24;
         if (hours > 12) hours = hours - 12;
         const hourDegrees = ((hours / 12) * 360) + 90;
 
+        secondHandRef.current.style.transform = `rotate(${secondDegrees}deg)`;
+        minuteHandRef.current.style.transform = `rotate(${minuteDegrees}deg)`;
+        hourHandRef.current.style.transform = `rotate(${hourDegrees}deg)`;
+
+        if (state.ready) return;
         setState({
             ...state,
-            secondDegrees,
-            minuteDegrees,
-            hourDegrees,
             ready: true
-         })
+        })
     }
 
     setInterval(() => {
@@ -109,9 +111,9 @@ const Clock = (props) => {
             <ClockMain country={props.country}>
                 <ClockInner>
                     <ClockCenter />
-                    <ClockHand ready={state.ready} degree={state.secondDegrees} secondsHand={true} />
-                    <ClockHand ready={state.ready} degree={state.minuteDegrees} />
-                    <ClockHand ready={state.ready} degree={state.hourDegrees} hoursHand={true} />
+                    <ClockHand ready={state.ready} ref={secondHandRef} secondsHand={true} />
+                    <ClockHand ready={state.ready} ref={minuteHandRef}  />
+                    <ClockHand ready={state.ready} ref={hourHandRef} hoursHand={true} />
                 </ClockInner>
             </ClockMain>
         </ClockWrapper>
