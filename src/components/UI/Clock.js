@@ -2,13 +2,14 @@ import React from 'react';
 import styled from 'styled-components';
 
 const ClockWrapper = styled.div`
-    position: relative;
-    margin: 0 2rem;
+    position: absolute;
+    top: ${props => props.top};
+    left: ${props => props.left};
 `;
 
 const ClockShadow = styled.div`
     position: absolute;
-    left: ${props => props.shadowLeftPosition};
+    left: ${props => props.shadowHorPosition};
     top: -0.5rem;
     width: 100%;
     height: 100%;
@@ -106,8 +107,8 @@ const Clock = (props) => {
     }, 1000);
 
     return (
-        <ClockWrapper>
-            <ClockShadow shadowLeftPosition={props.shadowLeftPosition} />
+        <ClockWrapper top={props.top} left={props.left}>
+            <ClockShadow shadowHorPosition={props.shadowHorPosition} />
             <ClockMain country={props.country}>
                 <ClockInner>
                     <ClockCenter />
