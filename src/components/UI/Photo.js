@@ -6,6 +6,11 @@ const PhotoWrapper = styled.div`
     top: ${props => props.top};
     left: ${props => props.left};
     transform: ${props => `rotate(${props.rotation}deg)`};
+    transition: 0.3s all;
+
+    &:hover {
+        transform: rotate(0deg);
+    }
 `;
 
 const PhotoMain = styled.img`
