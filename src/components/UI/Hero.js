@@ -4,18 +4,36 @@ import Clock from './Clock';
 import Photo from './Photo';
 import Whiteboard from './Whiteboard';
 import Darts from './Darts';
+import Desk from './Desk';
+import Bag from './Bag';
+import Mug from './Mug';
+import Phone from './Phone';
 
 const HeroWrapper = styled.div`
     position: relative;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
     min-height: 100vh;
     background: linear-gradient(180deg, rgba(25, 35, 38, 1) 0%, rgba(32, 153, 212, 1) 100%);
 `;
 
-const HeroInner = styled.div`
+const HeroTop = styled.div`
     position: relative;
     padding-top: 16rem;
+    width: 100%;
+    max-width: 120rem;
+`;
+
+const HeroBottom = styled.div`
+    position: relative;
+    width: 100%;
+`;
+
+const HeroInner = styled.div`
+    position: relative;
+    margin: 0 auto;
     width: 100%;
     max-width: 120rem;
 `;
@@ -25,7 +43,7 @@ const Hero = (props) => {
 
     return (
         <HeroWrapper id={props.id} ref={forwardedRef}>
-            <HeroInner>
+            <HeroTop>
                 <Clock
                     shadowHorPosition="-0.5rem"
                     country="usa"
@@ -59,12 +77,20 @@ const Hero = (props) => {
                     shadowHorPosition="-0.5rem"
                 />
                 <Darts 
-                    top="32rem" 
+                    top="28rem" 
                     left="100rem" 
-                    rotation="1" 
+                    rotation="-2" 
                     shadowHorPosition="-0.5rem"
                 />
-            </HeroInner>
+            </HeroTop>
+            <HeroBottom>
+                <Desk />
+                <HeroInner>
+                    <Bag left="0" bottom="10rem" />
+                    <Mug left="23rem" bottom="8rem" />
+                    <Phone right="23rem" bottom="8rem" />
+                </HeroInner>
+            </HeroBottom>
         </HeroWrapper>
     );
 };
