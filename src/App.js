@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import Header from './components/UI/Header';
-import Hero from './components/UI/Hero';
+import Hero from './screens/Hero';
+import AboutMe from './screens/AboutMe';
 import { AppProvider } from './AppContext';
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
       <Fragment>
         <Header />
         <Hero id="home" forwardedRef={sectionRefs.homeRef} />
+        <AboutMe />
       </Fragment>
     </AppProvider>
   );

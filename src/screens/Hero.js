@@ -1,13 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
-import Clock from './Clock';
-import Photo from './Photo';
-import Whiteboard from './Whiteboard';
-import Darts from './Darts';
-import Desk from './Desk';
-import Bag from './Bag';
-import Mug from './Mug';
-import Phone from './Phone';
+import Clock from '../components/Clock';
+import Photo from '../components/UI/Photo';
+import Whiteboard from '../components/UI/Whiteboard';
+import Darts from '../components/UI/Darts';
+import Desk from '../components/UI/Desk';
+import Bag from '../components/UI/Bag';
+import Mug from '../components/UI/Mug';
+import Phone from '../components/UI/Phone';
+import Aleks from '../components/UI/Aleks';
 
 const HeroWrapper = styled.div`
     position: relative;
@@ -85,6 +86,7 @@ const Hero = (props) => {
             </HeroTop>
             <HeroBottom>
                 <Desk />
+                <Aleks />
                 <HeroInner>
                     <Bag left="0" bottom="10rem" />
                     <Mug left="23rem" bottom="8rem" />

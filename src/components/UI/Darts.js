@@ -137,7 +137,7 @@ const DartsHole = styled.div`
 
 const Darts = (props) => {
     return (
-        <DartsWrapper left={props.left} top={props.top}>
+        <DartsWrapper left={props.left} top={props.top} rotation={props.rotation}>
             <DartsShadow />
             <DartsMain dangerouslySetInnerHTML={{ __html: svgs.dartBoard }} />
             <DartsHole />
