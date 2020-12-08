@@ -12,6 +12,7 @@ export const useIntersectionObserver = (
     const observer = new IntersectionObserver(
         (entries, observerInstance) => {
             entries.forEach(entry => {
+                console.log(entry);
                 if (entry.isIntersecting) {
                     setState({
                         activeSection: entry.target,
@@ -30,9 +31,10 @@ export const useIntersectionObserver = (
     useEffect(() => {
         // check that the element exists, and has not already been triggered
         if ( refs.length === 0 ) return;
+        console.log(refs);
         refs.forEach(ref => {
             if (ref.current && !state.triggered) {
-                // observer.observe(ref.current)
+                observer.observe(ref.current)
             }
         })
     })

@@ -1,18 +1,21 @@
 import React from 'react';
+import { pageEnums } from './helpers';
 
 const AppContext = React.createContext();
 
 class AppProvider extends React.Component {
     state = {
         pages: {
-            home: { label: 'Home' },
-            aboutMe: { label: 'About me' },
-            technologies: { label: 'Technologies' },
-            portfolio: { label: 'Portfolio' },
-            testimonials: { label: 'Testimonials' },
-            contact: { label: 'Contact' },
+            [pageEnums.HOME]: { label: 'Home' },
+            [pageEnums.ABOUTME]: { label: 'About me' },
+            [pageEnums.TECHNOLOGIES]: { label: 'Technologies' },
+            [pageEnums.PORTFOLIO]: { label: 'Portfolio' },
+            [pageEnums.TESTIMONIALS]: { label: 'Testimonials' },
+            [pageEnums.CONTACT]: { label: 'Contact' },
         },
-        activePage: 'home'
+        activePage: pageEnums.HOME,
+        activeNavItem: pageEnums.HOME,
+        headerMinified: false
     }
 
     setActivePage = (pageKey, event) => {
@@ -20,11 +23,16 @@ class AppProvider extends React.Component {
         this.setState({ activePage: pageKey });
     }
 
+    toggleHeaderMinified = (visibility) => {
+        this.setState({ headerMinified: visibility });
+    }
+
     render() {
         return (
             <AppContext.Provider value={{
                 state: this.state,
-                setActivePage: this.setActivePage
+                setActivePage: this.setActivePage,
+                toggleHeaderMinified: this.toggleHeaderMinified
             }}>
                 {this.props.children}
             </AppContext.Provider>

@@ -9,6 +9,7 @@ import Bag from '../components/UI/Bag';
 import Mug from '../components/UI/Mug';
 import Phone from '../components/UI/Phone';
 import Aleks from '../components/UI/Aleks';
+import { pageEnums } from '../helpers';
 
 const HeroWrapper = styled.div`
     position: relative;
@@ -40,10 +41,32 @@ const HeroInner = styled.div`
 `;
 
 const Hero = (props) => {
-    const forwardedRef = props.forwardedRef; /* This is for setting up the intersection observer */
+    const heroRef = React.useRef();
+    const heroHeaderObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                props.toggleHeaderMinified(false);
+            } else {
+                props.toggleHeaderMinified(true);
+            }
+        })
+    }, { threshold: 0.8 });
+
+    const heroSectionObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                props.setActiveNavItem(pageEnums.HOME);
+            }
+        })
+    }, { threshold: 0.8 })
+
+    React.useEffect(() => {
+        heroHeaderObserver.observe(heroRef.current);
+        heroSectionObserver.observe(heroRef.current);
+    }, []);
 
     return (
-        <HeroWrapper id={props.id} ref={forwardedRef}>
+        <HeroWrapper id={props.id} ref={heroRef}>
             <HeroTop>
                 <Clock
                     shadowHorPosition="-0.5rem"
@@ -57,30 +80,30 @@ const Hero = (props) => {
                     country="md"
                     timeDifference="10"
                     top="25rem"
-                    left="34rem"                    
+                    left="34rem"
                 />
-                <Clock 
-                    shadowHorPosition="0.5rem" 
-                    country="au" 
-                    timeDifference="3" 
+                <Clock
+                    shadowHorPosition="0.5rem"
+                    country="au"
+                    timeDifference="3"
                     top="37rem"
                     left="26rem"
                 />
-                <Photo 
-                    top="35rem" 
-                    left="5rem" 
-                    rotation="-5" 
+                <Photo
+                    top="35rem"
+                    left="5rem"
+                    rotation="-5"
                 />
-                <Whiteboard 
-                    top="22rem" 
-                    left="50rem" 
-                    rotation="1" 
+                <Whiteboard
+                    top="22rem"
+                    left="50rem"
+                    rotation="1"
                     shadowHorPosition="-0.5rem"
                 />
-                <Darts 
-                    top="28rem" 
-                    left="100rem" 
-                    rotation="-2" 
+                <Darts
+                    top="28rem"
+                    left="100rem"
+                    rotation="-2"
                     shadowHorPosition="-0.5rem"
                 />
             </HeroTop>

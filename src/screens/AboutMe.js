@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import DeskBottom from '../components/UI/DeskBottom';
+import { pageEnums } from '../helpers';
 
 const AboutMeWrapper = styled.div`
     position: relative;
@@ -13,7 +15,8 @@ const AboutMeInner = styled.div`
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    width: 120rem;
+    width: 100%;
+    max-width: 120rem;
 `;
 
 const AboutMePhoto = styled.div`
@@ -21,6 +24,7 @@ const AboutMePhoto = styled.div`
     bottom: 0;
     left: 0;
     width: 60rem;
+    max-width: 30%;
     height: 60rem;
     background: url('img/family.png') bottom left no-repeat;
     background-size: contain;
@@ -40,11 +44,26 @@ const AboutMeHeading = styled.h1`
     font-size: 3rem;
 `;
 
-const AboutMe = () => {
+const AboutMe = (props) => {
     const innerRef = React.useRef();
     const photoRef = React.useRef();
 
+    const wrapperRef = React.useRef();
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                props.setActiveNavItem(pageEnums.ABOUTME);
+            }
+        })
+    }, { threshold: 0.8 })
+
     React.useEffect(() => {
+        observer.observe(wrapperRef.current);
+    }, []);    
+
+    React.useEffect(() => {
+        // Logic for dynamically setting the left padding of the content section in order to 
+        // create room for the desk image in the bottom corner
         const innerWidth = innerRef.current.offsetWidth;
         const photoWidth = photoRef.current.offsetWidth;
         const windowWidth = window.innerWidth;
@@ -54,7 +73,8 @@ const AboutMe = () => {
         if ( leftPadding < 0 ) innerRef.current.style.paddingLeft = `${-leftPadding}px`;
     }, []);
     return (
-        <AboutMeWrapper>
+        <AboutMeWrapper ref={wrapperRef}>
+            <DeskBottom />
             <AboutMePhoto ref={photoRef} />
             <AboutMeInner ref={innerRef}>
                 <AboutMeContent>

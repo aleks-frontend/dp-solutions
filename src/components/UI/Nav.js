@@ -14,19 +14,18 @@ const NavWrapper = styled.div`
     text-decoration: none;
  `;
 
-const Nav = () => {
+const Nav = (props) => {
     const context = React.useContext(AppContext);        
 
     return (
         <NavWrapper>
             {Object.keys(context.state.pages).map(pageId => {
                 const page = context.state.pages[pageId];
-                const isActive = context.state.activePage === pageId;
+                const isActive = props.activeNavItemState.activeNavItem === pageId;
                 return <NavItem 
                         key={pageId}
                         href={pageId} 
                         active={isActive}
-                        onClick={(event) => context.setActivePage(pageId, event)}
                         >
                             {page.label}                        
                         </NavItem>;
